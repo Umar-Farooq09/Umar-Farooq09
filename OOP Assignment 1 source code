@@ -1,0 +1,98 @@
+#include <iostream>
+using namespace std;
+class BankAccount {
+private:
+string accountHolderName; //stores Account holder name
+int accountNumber; //Stores the Account number
+double balance; //Stores the balance in accounts
+public:
+void Access(string AHN, int AN, double B)
+{
+accountHolderName = AHN;
+accountNumber = AN;
+balance = B;
+}
+void addDetails()
+{
+cout << "Enter Account Holder name: ";
+cin >> accountHolderName;
+cout << "Enter Account number: ";
+cin >> accountNumber;
+cout << "Enter balance: ";
+cin >> balance;
+}
+void Display()
+{
+cout << "Account Holder Name: " << accountHolderName << endl;
+cout << "Account Number: " << accountNumber << endl;
+cout << "Total Balance: " << balance << endl;
+}
+void Deposit()
+{
+double amount = 0;
+if (amount < 0)
+{
+cout << "Invalid Input!" << endl;
+}
+else
+{
+cout << "Enter amount to deposit: ";
+cin >> amount;
+balance += amount;
+cout << "Deposited Successfully!" << endl;
+}
+cout << "New Balance: " << balance << endl;
+cout << endl;
+}
+void Withdraw()
+{
+double amount;
+cout << "Enter amount to withdraw: ";
+cin >> amount;
+if (amount > balance)
+{
+cout << "Insuffucient balance!" << endl;
+}
+else
+{
+balance -= amount;
+cout << "Succesfully deducted" << endl;
+}
+cout << "New Balance: " << balance << endl;
+cout << endl;
+}
+friend void balanceCheck(BankAccount a1, BankAccount a2);
+};
+void balanceCheck(BankAccount a1,BankAccount a2)
+{
+if (a1.balance > a2.balance)
+{
+cout<< "Account 1 Has greater Balance" << endl;
+}
+else
+{
+cout << "Account 2 has greater balance" << endl;
+}
+}
+int main()
+{
+BankAccount a1;
+BankAccount a2;
+a1.addDetails();
+cout << endl;
+a1.Deposit();
+a1.Withdraw();
+cout << endl;
+a2.addDetails();
+cout << endl;
+a2.Deposit();
+a2.Withdraw();
+cout << endl;
+cout << "Account 1 Details: " << endl;
+a1.Display();
+cout << endl;
+cout << "Account 2 Details: " << endl;
+a2.Display();
+cout << endl;
+balanceCheck(a1,a2);
+}
