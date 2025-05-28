@@ -1,0 +1,118 @@
+#include <iostream>
+using namespace std;
+class Device {
+protected:
+	string brandName;
+	string modelNumber;
+	float price;
+public:
+	Device(string b, string m, float p)
+	{
+		brandName = b;
+		modelNumber = m;
+		price = p;
+	}
+	virtual float discountedPrice() const = 0;
+	virtual void display() const
+	{
+		cout << "Brand name: " << brandName << endl;
+		cout << "Model number: " << modelNumber << endl;
+		cout << "Price: $" << price << endl;
+	}
+	virtual ~Device() {}
+};
+class Laptop : public Device {
+public:
+	Laptop(string b, string m, float p) : Device(b, m, p) {}
+	float discountedPrice() const override
+	{
+		return price * 0.90;
+	}
+	void display() const override
+	{
+		Device::display();
+		cout << "Discounted price: $" << discountedPrice() << endl;
+	}
+};
+class Tablet : public Device {
+public:
+	Tablet(string b, string m, float p) : Device(b, m, p) {}
+	float discountedPrice() const override
+	{
+		return price * 0.85;
+	}
+	void display() const override
+	{
+		Device::display();
+		cout << "Discounted price: $" << discountedPrice() << endl;
+	}
+};
+class Smartphone : public Device {
+public:
+	Smartphone(string b, string m, float p) : Device(b, m, p) {}
+	float discountedPrice() const override
+	{
+		return price * 0.80;
+	}
+	void display() const override
+	{
+		Device::display();
+		cout << "Discounted price: $" << discountedPrice() << endl;
+	}
+};
+template <class T>
+class Cart {
+private:
+	T* items[100];
+	int count = 0;
+public:
+	void addItem(T* item)
+	{
+		if (count < 100)
+		{
+			items[count++] = item;
+		}
+	}
+	void displayTotalBill()
+	{
+		float total = 0;
+		cout << "---Device List---" << endl;
+		for (int i = 0; i < count; i++)
+		{
+			items[i]->display();
+			total += items[i]->discountedPrice();
+			cout << "----------------------------" << endl;
+		}
+		cout << "Total bill: $" << total << endl;
+	}
+};
+int main()
+{
+	Device* d1 = new Laptop("HP", "Pavilion", 1249.99);
+	Device* d2 = new Laptop("Apple", "Macbook air 2023", 1399.99);
+
+	Device* d3 = new Tablet("Apple", "Mini 5", 1099.99);
+	Device* d4 = new Tablet("Samsung", "Tab A9+", 899.99);
+
+	Device* d5 = new Smartphone("Apple", "16 pro", 1399.99);
+	Device* d6 = new Smartphone("Samsung", "Galaxy S25 ultra", 1299.99);
+
+	Cart<Device> cart;
+	cart.addItem(d1);
+	cart.addItem(d2);
+	cart.addItem(d3);
+	cart.addItem(d4);
+	cart.addItem(d5);
+	cart.addItem(d6);
+
+	cart.displayTotalBill();
+
+	delete d1;
+	delete d2;
+	delete d3;
+	delete d4;
+	delete d5;
+	delete d6;
+
+	return 0;
+}
