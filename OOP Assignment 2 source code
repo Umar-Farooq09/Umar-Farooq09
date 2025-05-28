@@ -1,0 +1,127 @@
+#include <iostream>
+#include <string>
+using namespace std;
+class Car {
+private:
+int carID;
+string brand;
+string model;
+float rentalPricePerDay;
+bool isRented;
+public:
+Car() :carID(0), brand(""), model(""), rentalPricePerDay(0.0), 
+isRented(false) {}
+void setCarDetails()
+{
+cout << "Enter car ID: ";
+cin >> carID;
+cout << "Enter car brand: ";
+cin >> brand;
+cout << "Enter car model: ";
+cin >> model;
+cout << "Enter rental price per day: $";
+cin >> rentalPricePerDay;
+isRented = false;
+}
+void rentCar()
+{
+if (!isRented)
+{
+isRented = true;
+cout << "Car " << carID << " is rented." << endl;
+}
+else
+{
+cout << "Car " << carID << " is not rented." <<
+endl;
+}
+cout << "-------------------" << endl;
+}
+void returnCar()
+{
+if (isRented)
+{
+isRented = false;
+cout << "Car " << carID << " is returned." <<
+endl;
+}
+else
+{
+cout << "Car " << carID << " is not returned." <<
+endl;
+}
+cout << "-------------------" << endl;
+}
+void display()
+{
+cout << "Car ID: " << carID << endl;
+cout << "Car brand: " << brand << endl;
+cout << "Car model: " << model << endl;
+cout << "Car rent per day: $" << rentalPricePerDay <<
+endl;
+cout << "Car status: " << (isRented ? "Rented" : 
+"Available") << endl;
+cout << "----------------------" << endl;
+}
+int getCarID()
+{
+return carID;
+}
+};
+int main()
+{
+int size;
+cout << "Enter number of car you want to add: ";
+cin >> size;
+Car* Cars = new Car[size];
+for (int i = 0; i < size; i++)
+{
+cout << "Enter details for car " << (i + 1) << ": " <<
+endl;
+Cars[i].setCarDetails();
+cout << endl;
+}
+int choice;
+do {
+cout << "Car Rental Company" << endl;
+cout << "-------------------" << endl;
+cout << "1. Rent a car" << endl;
+cout << "2. return a car" << endl;
+cout << "3. Display all cars" << endl;
+cout << "4. Exit" << endl;
+cout << "Enter your choice: ";
+cin >> choice;
+cout << "-------------------" << endl;
+if (choice == 1 || choice == 2)
+{
+int carID;
+cout << "Enter Car ID: ";
+cin >> carID;
+bool found = false;
+for (int i = 0; i < size; i++) 
+{
+if (Cars[i].getCarID() == carID)
+{
+if (choice == 1) Cars[i].rentCar();
+else Cars[i].returnCar();
+found = true;
+break;
+}
+}
+if (!found) cout << "Car ID not found." << endl;
+}
+else if (choice == 3) 
+{
+cout << "Car List" << endl;
+cout << "-------------------" << endl;
+for (int i = 0; i < size; i++)
+{
+Cars[i].display();
+}
+}
+}
+while (choice != 4);
+delete[] Cars;
+cout << "Exiting program..." << endl;
+return 0;
+}
