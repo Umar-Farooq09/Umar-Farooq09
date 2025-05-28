@@ -1,0 +1,97 @@
+#include <iostream>
+#include <string>
+using namespace std;
+class Staff {
+protected:
+string name;
+int ID;
+public:
+void inputBasicInfo()
+{
+cout << "Enter Name: ";
+getline(cin, name);
+cout << "Enter ID: ";
+cin >> ID;
+cin.ignore();
+}
+void displayBasicInfo()
+{
+cout << "Name: " << name << endl;
+cout << "ID: " << ID << endl;
+}
+};
+class TeachingStaff : public Staff {
+private:
+string subject;
+int researchPaperPublished;
+public:
+void inputInfo()
+{
+inputBasicInfo();
+cout << "Enter subject: ";
+getline(cin, subject);
+cout << "Enter No. of research paper published: ";
+cin >> researchPaperPublished;
+cin.ignore();
+cout << endl;
+}
+void displayInfo()
+{
+displayBasicInfo();
+cout << "Subject: " << subject << endl;
+cout << "Research paper published: " << researchPaperPublished <<
+endl;
+}
+};
+class NonTeachingStaff : public Staff {
+private:
+string department;
+string shift;
+public:
+void inputInfo()
+{
+inputBasicInfo();
+cout << "Enter department: ";
+getline(cin, department);
+cout << "Enter shift (Morning/Evening/Night): ";
+getline(cin, shift);
+cin.ignore();
+}
+void displayInfo()
+{
+displayBasicInfo();
+cout << "Department: " << department << endl;
+cout << "Shift: " << shift << endl;
+}
+};
+int main()
+{
+TeachingStaff teaching[3];
+NonTeachingStaff nonteaching[3];
+cout << "---Enter Information for teaching staff---" << endl;
+for (int i = 0; i < 3; i++)
+{
+cout << "Staff " << i + 1 << ": " << endl;
+teaching[i].inputInfo();
+}
+cout << "---Enter Information for Non-teaching staff---" << endl;
+for (int i = 0; i < 3; i++)
+{
+cout << "Staff " << i + 1 << ": " << endl;
+nonteaching[i].inputInfo();
+}
+cout << "*---Displaying staff information---*" << endl << endl;
+cout << " ===Teaching Staff===" << endl;
+for (int i = 0; i < 3; i++)
+{
+teaching[i].displayInfo();
+cout << "---------------------------" << endl;
+}
+cout << " ===Non-Teaching Staff===" << endl;
+for (int i = 0; i < 3; i++)
+{
+nonteaching[i].displayInfo();
+cout << "---------------------------" << endl;
+}
+return 0;
+}
